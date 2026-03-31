@@ -1,0 +1,15 @@
+{
+  "wildlife": {
+    "title": "Wildlife",
+    "year": 2025,
+    "cover": "wildlife-01.jpg",
+    "photos": [
+      "wildlife-01.jpg", "wildlife-02.jpg", "wildlife-03.jpg", "wildlife-04.jpg",
+      "wildlife-05.jpg", "wildlife-06.jpg", "wildlife-07.jpg", "wildlife-08.jpg",
+      "wildlife-09.jpg", "wildlife-10.jpg", "wildlife-11.jpg", "wildlife-12.jpg",
+      "wildlife-13.jpg", "wildlife-14.jpg", "wildlife-15.jpg", "wildlife-16.jpg",
+      "wildlife-17.jpg", "wildlife-18.jpg", "wildlife-19.jpg", "wildlife-20.jpg",
+      "wildlife-21.jpg", "wildlife-22.jpg", "wildlife-23.jpg", "wildlife-24.jpg"
+    ]
+  }
+}

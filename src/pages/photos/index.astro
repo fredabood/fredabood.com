@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import albums from '../../data/albums.json';
+
+const imageBase = import.meta.env.PUBLIC_IMAGE_BASE || '/images';
+const albumEntries = Object.entries(albums);
+---
+
+<BaseLayout title="Photography — Fred Abood" description="Wildlife and nature photography by Fred Abood.">
+  <h1>Photography</h1>
+  <div class="album-grid">
+    {albumEntries.map(([slug, album]) => (
+      <a href={`/photos/${slug}`} class="album-card">
+        <div class="album-cover">
+          <img
+            src={`${imageBase}/${slug}/${album.cover}`}
+            alt={album.title}
+            loading="eager"
+          />
+        </div>
+        <div class="album-info">
+          <h2>{album.title}</h2>
+          <span class="album-year">{album.year}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  h1 {
+    margin-bottom: 2rem;
+  }
+
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .album-card {
+    display: block;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg-secondary);
+    transition: transform 0.2s ease;
+  }
+  .album-card:hover {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+
+  .album-cover {
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .album-cover img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .album-card:hover .album-cover img {
+    transform: scale(1.03);
+  }
+
+  .album-info {
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .album-info h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .album-year {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+</style>

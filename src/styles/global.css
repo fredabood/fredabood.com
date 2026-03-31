@@ -1,0 +1,92 @@
+/* Design tokens — matches notes.fredabood.com (Quartz v4) */
+:root {
+  --bg: #E7E9F0;
+  --bg-secondary: #CED1DB;
+  --text: #025418;
+  --text-secondary: #7A8390;
+  --heading: #013410;
+  --link: #027020;
+  --accent: #048832;
+  --highlight: rgba(2, 84, 24, 0.1);
+  --font-body: 'Inter', system-ui, sans-serif;
+  --max-width: 800px;
+  --transition: 0.2s ease;
+  --radius: 6px;
+}
+
+[data-theme="dark"] {
+  --bg: #2C3540;
+  --bg-secondary: #3D4854;
+  --text: #A8E6B0;
+  --text-secondary: #7A8390;
+  --heading: #C8F5D0;
+  --link: #66BB6A;
+  --accent: #81C784;
+  --highlight: rgba(168, 230, 176, 0.15);
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  transition: background var(--transition), color var(--transition);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Typography */
+h1, h2, h3 {
+  color: var(--heading);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+h1 { font-size: 2.5rem; letter-spacing: -0.02em; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.25rem; }
+
+p { margin-bottom: 1.25rem; }
+
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+
+a:hover { opacity: 0.8; }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Layout */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+main {
+  flex: 1;
+  padding: 2rem 0;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+}

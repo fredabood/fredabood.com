@@ -1,0 +1,47 @@
+---
+import DarkModeToggle from './DarkModeToggle.astro';
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="header">
+  <div class="header-inner container">
+    <a href="/" class="site-name">Fred Abood</a>
+    <nav class="nav">
+      <a href="https://notes.fredabood.com" class="nav-link">Notes</a>
+      <a href="/photos" class:list={["nav-link", { active: pathname.startsWith('/photos') }]}>Photography</a>
+      <DarkModeToggle />
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    border-bottom: 1px solid var(--bg-secondary);
+    padding: 1rem 0;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--heading);
+  }
+  .site-name:hover { opacity: 0.8; }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .nav-link {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .nav-link:hover, .nav-link.active {
+    color: var(--link);
+    opacity: 1;
+  }
+</style>
