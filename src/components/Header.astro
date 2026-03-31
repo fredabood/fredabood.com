@@ -1,6 +1,4 @@
 ---
-import DarkModeToggle from './DarkModeToggle.astro';
-
 const pathname = Astro.url.pathname;
 ---
 
@@ -10,7 +8,6 @@ const pathname = Astro.url.pathname;
     <nav class="nav">
       <a href="https://notes.fredabood.com" class="nav-link">Notes</a>
       <a href="/photos" class:list={["nav-link", { active: pathname.startsWith('/photos') }]}>Photography</a>
-      <DarkModeToggle />
     </nav>
   </div>
 </header>

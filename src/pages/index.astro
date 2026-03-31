@@ -1,64 +1,126 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SocialLinks from '../components/SocialLinks.astro';
+
+const imageBase = import.meta.env.PUBLIC_IMAGE_BASE || '/images';
 ---
 
-<BaseLayout title="Fred Abood" description="Data nerd from Michigan with a love for food, art, travel, and family.">
-  <div class="landing">
-    <h1>Fred Abood</h1>
-    <p class="bio">
-      Data nerd from Michigan with a love for food, art, travel, and family.
-      I'm a life long learner, amateur caterer and wildlife photographer.
-    </p>
-    <nav class="landing-nav">
-      <a href="https://notes.fredabood.com" class="landing-link">Fred's Notes</a>
-      <span class="sep">/</span>
-      <a href="/photos" class="landing-link">Photography</a>
-    </nav>
-    <div class="social-row">
-      <SocialLinks />
+<BaseLayout title="Fred Abood" description="Data nerd from Michigan with a love for food, art, travel, and family." fullBleed>
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-inner">
+        <h1>Fred Abood</h1>
+        <p class="bio">
+          Data nerd from Michigan with a love for food, art, travel, and family.
+          I'm a life long learner, amateur caterer and wildlife photographer.
+        </p>
+        <nav class="hero-nav">
+          <a href="https://notes.fredabood.com" class="nav-pill">Fred's Notes</a>
+          <a href="/photos" class="nav-pill">Photography</a>
+        </nav>
+        <SocialLinks />
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src={`${imageBase}/hero.jpg`} alt="Fred Abood" />
     </div>
   </div>
 </BaseLayout>
 
 <style>
-  .landing {
+  .hero {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-inner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    padding: 6rem 0 4rem;
-    min-height: 60vh;
-    justify-content: center;
   }
 
   h1 {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 2.25rem;
   }
 
   .bio {
-    max-width: 480px;
-    color: var(--text);
-    font-size: 1.1rem;
+    max-width: 360px;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
   }
 
-  .landing-nav {
+  .hero-nav {
     display: flex;
-    align-items: center;
     gap: 0.75rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
   }
 
-  .landing-link {
-    font-size: 1rem;
+  .nav-pill {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: var(--heading);
+    color: var(--bg);
+    border-radius: 2rem;
+    font-size: 0.85rem;
     font-weight: 500;
+    border: 1.5px solid var(--heading);
+    transition: background var(--transition), color var(--transition);
   }
 
-  .sep {
-    color: var(--bg-secondary);
+  .nav-pill:hover {
+    background: transparent;
+    color: var(--heading);
+    opacity: 1;
   }
 
-  .social-row {
-    margin-top: 0.5rem;
+  .hero-image {
+    line-height: 0;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 70%;
+  }
+
+  @media (max-width: 800px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .hero-image {
+      order: -1;
+    }
+
+    .hero-image img {
+      height: 50vh;
+    }
+
+    .hero-content {
+      padding: 3rem 1.5rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
   }
 </style>

@@ -7,12 +7,16 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  wide?: boolean;
+  fullBleed?: boolean;
 }
 
 const {
   title = 'Fred Abood',
   description = 'Data nerd from Michigan with a love for food, art, travel, and family.',
   ogImage = '/favicon.svg',
+  wide = false,
+  fullBleed = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -39,24 +43,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
 
-    <!-- Dark mode: prevent flash -->
-    <script is:inline>
-      (function() {
-        const stored = localStorage.getItem('theme');
-        const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', stored || preferred);
-      })();
-    </script>
   </head>
   <body>
-    <Header />
-    <main>
-      <div class="container">
+    {!fullBleed && <Header />}
+    <main class:list={[{ "main--full-bleed": fullBleed }]}>
+      {fullBleed ? (
         <slot />
-      </div>
+      ) : (
+        <div class:list={["container", { "container--wide": wide }]}>
+          <slot />
+        </div>
+      )}
     </main>
-    <Footer />
+    {!fullBleed && <Footer />}
   </body>
 </html>
