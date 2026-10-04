@@ -7,19 +7,25 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: 'website' | 'profile';
   wide?: boolean;
   fullBleed?: boolean;
 }
 
 const {
   title = 'Fred Abood',
-  description = 'Data nerd from Michigan with a love for food, art, travel, and family.',
-  ogImage = '/favicon.svg',
+  description = 'Fred Abood: partner ecosystems, enterprise go-to-market, and data & AI platforms.',
+  ogImage = '/og.jpg',
+  ogImageAlt = 'Fred Abood, Field CTO at Databricks',
+  ogType = 'website',
   wide = false,
   fullBleed = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// Link-preview scrapers (LinkedIn, X, iMessage) need an absolute URL to a raster image.
+const ogImageURL = new URL(ogImage, Astro.site);
 ---
 
 <!doctype html>
@@ -30,15 +36,25 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <slot name="head" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    {ogType === 'profile' && <meta property="profile:first_name" content="Fred" />}
+    {ogType === 'profile' && <meta property="profile:last_name" content="Abood" />}
+    <meta property="og:site_name" content="Fred Abood" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

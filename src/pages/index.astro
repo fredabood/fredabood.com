@@ -1,71 +1,151 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SocialLinks from '../components/SocialLinks.astro';
+import Footer from '../components/Footer.astro';
+import { Picture } from 'astro:assets';
+import hero from '../assets/hero.jpg';
 
-const imageBase = import.meta.env.PUBLIC_IMAGE_BASE || '/images';
+const title = 'Fred Abood | Field CTO at Databricks: AI Strategy, Strategic Alliances & Enterprise GTM';
+const description =
+  'Fred Abood is Field CTO for Global SI Partnerships at Databricks, leading the Accenture partnership. AI and data strategy, strategic alliances, partner ecosystems, generative AI and enterprise go-to-market.';
+
+// Google documents ProfilePage with a Person mainEntity for single-person sites.
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: 'Fred Abood',
+    description,
+    url: 'https://fredabood.com',
+    image: 'https://fredabood.com/og.jpg',
+    jobTitle: 'Field CTO, Global SI Partnerships',
+    worksFor: { '@type': 'Organization', name: 'Databricks', url: 'https://www.databricks.com' },
+    alumniOf: { '@type': 'CollegeOrUniversity', name: 'University of Colorado Boulder' },
+    homeLocation: { '@type': 'Place', name: 'Michigan, United States' },
+    knowsAbout: [
+      'AI strategy',
+      'Data strategy',
+      'Generative AI',
+      'Agentic AI',
+      'Strategic alliances',
+      'Partner ecosystems',
+      'Systems integrators',
+      'Enterprise go-to-market',
+      'Databricks',
+      'Lakehouse architecture',
+      'Enterprise architecture',
+    ],
+    sameAs: [
+      'https://www.linkedin.com/in/fredabood',
+      'https://github.com/fredabood',
+      'https://x.com/fredabood',
+      'https://instagram.com/fredabood',
+    ],
+  },
+};
 ---
 
-<BaseLayout title="Fred Abood" description="Data nerd from Michigan with a love for food, art, travel, and family." fullBleed>
-  <div class="hero">
+<BaseLayout title={title} description={description} ogType="profile" fullBleed>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(personSchema)} />
+  <section class="hero">
     <div class="hero-content">
       <div class="hero-inner">
         <h1>Fred Abood</h1>
-        <p class="bio">
-          Data nerd from Michigan with a love for food, art, travel, and family.
-          I'm a life long learner, amateur caterer and wildlife photographer.
+        <p class="headline">
+          <strong>AI &amp; Data Strategy</strong> | <strong>Strategic Alliances</strong> | <strong>Enterprise GTM</strong>
         </p>
+        <p class="bio">
+          I turn data and AI platforms into enterprise revenue, through the partners who deliver
+          them and the executives who buy them.
+        </p>
+        <p class="bio">
+          Today I'm Field CTO for Global SI Partnerships at Databricks, where I lead our largest
+          partnerships globally. I spend my time with the founders and practice leaders building on
+          Databricks.
+        </p>
+        <p class="bio">Analyst turned architect who still loves to build.</p>
+        <blockquote class="open">
+          I'm always glad to talk with founders and investors working on data and AI.
+        </blockquote>
         <nav class="hero-nav">
-          <a href="https://notes.fredabood.com" class="nav-pill">Fred's Notes</a>
-          <a href="/photos" class="nav-pill">Photography</a>
+          <a href="https://linkedin.com/in/fredabood" class="nav-pill" target="_blank" rel="noopener noreferrer">Get in touch</a>
         </nav>
-        <SocialLinks />
+        <div class="off-clock-block">
+          <h2 class="off-clock">Off the clock</h2>
+          <p class="bio">
+            I'm from Michigan, and I'm a lifelong learner, amateur caterer and wildlife photographer.
+          </p>
+          <nav class="hero-nav hero-nav--off-clock">
+            <a href="/photos" class="nav-pill nav-pill--ghost">Photography</a>
+            <a href="https://notes.fredabood.com" class="nav-pill nav-pill--ghost">Fred's Notes</a>
+          </nav>
+        </div>
+        <div class="socials">
+          <SocialLinks />
+        </div>
       </div>
     </div>
     <div class="hero-image">
-      <img src={`${imageBase}/hero.jpg`} alt="Fred Abood" />
+      <Picture
+        src={hero}
+        formats={['avif', 'webp']}
+        widths={[640, 960, 1280, 1440]}
+        sizes="(max-width: 800px) 100vw, 60vw"
+        alt="Fred Abood"
+        loading="eager"
+        fetchpriority="high"
+      />
     </div>
-  </div>
+  </section>
+
+  <Footer />
 </BaseLayout>
 
 <style>
   .hero {
     display: grid;
-    grid-template-columns: 2fr 3fr;
-    height: 100vh;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    min-height: 100vh;
     overflow: hidden;
   }
 
   .hero-content {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
     padding: 2rem 3rem;
-    position: relative;
-    overflow: hidden;
   }
 
   .hero-inner {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 420px;
   }
 
   h1 {
-    margin-bottom: 0.75rem;
-    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+  }
+
+  .headline {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--heading);
+    margin-bottom: 1rem;
   }
 
   .bio {
-    max-width: 360px;
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
-    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 0.9rem;
+    color: var(--text);
   }
 
   .hero-nav {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.75rem;
     margin-bottom: 1.75rem;
   }
@@ -82,10 +162,16 @@ const imageBase = import.meta.env.PUBLIC_IMAGE_BASE || '/images';
     transition: background var(--transition), color var(--transition);
   }
 
-  .nav-pill:hover {
+  .nav-pill:hover,
+  .nav-pill--ghost {
     background: transparent;
     color: var(--heading);
     opacity: 1;
+  }
+
+  .nav-pill--ghost:hover {
+    background: var(--heading);
+    color: var(--bg);
   }
 
   .hero-image {
@@ -94,33 +180,57 @@ const imageBase = import.meta.env.PUBLIC_IMAGE_BASE || '/images';
     height: 100%;
   }
 
-  .hero-image img {
+  .hero-image :global(picture) {
+    display: block;
+    height: 100%;
+  }
+
+  .hero-image :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: 50% 70%;
   }
 
+  .off-clock {
+    font-size: 1.4rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+
+  .off-clock-block {
+    align-self: stretch;
+    text-align: right;
+  }
+
+  .hero-nav--off-clock {
+    justify-content: flex-end;
+    margin-bottom: 3.1rem;
+  }
+
+  .socials {
+    align-self: center;
+  }
+
+  .open {
+    margin: 0.6rem 0 1.5rem;
+    font-size: 0.95rem;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--accent);
+    background: var(--highlight);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
   @media (max-width: 800px) {
     .hero {
-      grid-template-columns: 1fr;
-      min-height: auto;
+      grid-template-columns: minmax(0, 1fr);
+      height: auto;
+      min-height: 0;
     }
 
-    .hero-image {
-      order: -1;
-    }
+    .hero-image { order: -1; }
+    .hero-image :global(img) { height: 50vh; }
+    .hero-content { padding: 2.5rem 1.5rem; }
+    h1 { font-size: 2rem; }
 
-    .hero-image img {
-      height: 50vh;
-    }
-
-    .hero-content {
-      padding: 3rem 1.5rem;
-    }
-
-    h1 {
-      font-size: 2rem;
-    }
   }
 </style>
