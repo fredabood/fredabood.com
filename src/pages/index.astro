@@ -41,6 +41,7 @@ const personSchema = {
       'https://github.com/fredabood',
       'https://x.com/fredabood',
       'https://instagram.com/fredabood',
+      'https://fredabood.substack.com',
     ],
   },
 };
@@ -66,21 +67,8 @@ const personSchema = {
         <blockquote class="open">
           I'm always glad to talk with founders and investors working on data and AI.
         </blockquote>
-        <nav class="hero-nav">
-          <a href="https://linkedin.com/in/fredabood" class="nav-pill" target="_blank" rel="noopener noreferrer">Get in touch</a>
-        </nav>
-        <div class="off-clock-block">
-          <h2 class="off-clock">Off the clock</h2>
-          <p class="bio">
-            I'm from Michigan, and I'm a lifelong learner, amateur caterer and wildlife photographer.
-          </p>
-          <nav class="hero-nav hero-nav--off-clock">
-            <a href="/photos" class="nav-pill nav-pill--ghost">Photography</a>
-            <a href="https://notes.fredabood.com" class="nav-pill nav-pill--ghost">Fred's Notes</a>
-          </nav>
-        </div>
-        <div class="socials">
-          <SocialLinks />
+        <div class="contact-row">
+          <SocialLinks size={18} linkedinLabel="Get in touch" icons={['linkedin', 'github', 'x', 'substack']} />
         </div>
       </div>
     </div>
@@ -97,22 +85,26 @@ const personSchema = {
     </div>
   </section>
 
-  <Footer />
+  <div class="home-footer">
+    <Footer />
+  </div>
 </BaseLayout>
 
 <style>
+  /* Desktop: the hero is exactly one viewport tall, so nothing scrolls. The photo is
+     absolutely positioned so it fills its column without driving the page height. */
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-columns: minmax(32rem, 2fr) minmax(0, 3fr);
     min-height: 100vh;
-    overflow: hidden;
+    min-height: 100dvh;
   }
 
   .hero-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 3rem;
+    padding: 2rem 2.5rem;
   }
 
   .hero-inner {
@@ -120,7 +112,7 @@ const personSchema = {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
-    max-width: 420px;
+    max-width: 460px;
   }
 
   h1 {
@@ -129,10 +121,15 @@ const personSchema = {
   }
 
   .headline {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 400;
     color: var(--heading);
     margin-bottom: 1rem;
+  }
+
+  /* Wrap only at the separators, never inside a phrase. */
+  .headline strong {
+    white-space: nowrap;
   }
 
   .bio {
@@ -141,72 +138,78 @@ const personSchema = {
     color: var(--text);
   }
 
-  .hero-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-bottom: 1.75rem;
-  }
-
-  .nav-pill {
-    display: inline-block;
-    padding: 0.5rem 1.5rem;
-    background: var(--heading);
-    color: var(--bg);
-    border-radius: 2rem;
-    font-size: 0.85rem;
-    font-weight: 500;
-    border: 1.5px solid var(--heading);
-    transition: background var(--transition), color var(--transition);
-  }
-
-  .nav-pill:hover,
-  .nav-pill--ghost {
-    background: transparent;
-    color: var(--heading);
-    opacity: 1;
-  }
-
-  .nav-pill--ghost:hover {
-    background: var(--heading);
-    color: var(--bg);
-  }
-
   .hero-image {
+    position: relative;
     line-height: 0;
     overflow: hidden;
-    height: 100%;
   }
 
   .hero-image :global(picture) {
-    display: block;
-    height: 100%;
+    position: absolute;
+    inset: 0;
   }
 
   .hero-image :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 70%;
+    /* The person's center in the photo; cover-cropping keeps this point fixed, so the subject stays in frame. */
+    object-position: 31% 68%;
   }
 
-  .off-clock {
-    font-size: 1.4rem;
-    margin: 1.5rem 0 0.5rem;
-  }
-
-  .off-clock-block {
+  .contact-row {
     align-self: stretch;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
   }
 
-  .hero-nav--off-clock {
-    justify-content: flex-end;
-    margin-bottom: 3.1rem;
+  .contact-row :global(.social-links) {
+    flex: 1;
+    gap: 0.6rem;
   }
 
-  .socials {
-    align-self: center;
+  .contact-row :global(.social-link) {
+    width: 2.5rem;
+    height: 2.5rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: var(--heading);
+    color: var(--bg);
+    transition: transform var(--transition), background var(--transition);
+  }
+
+  .contact-row :global(.social-link:hover) {
+    background: var(--accent);
+    color: var(--bg);
+    transform: translateY(-2px);
+  }
+
+  /* LinkedIn is the filled primary pill with its label inside; the others are outlined circles. */
+  .contact-row :global(.social-link--linkedin) {
+    width: auto;
+    gap: 0.5rem;
+    padding: 0 1.25rem;
+    border-radius: 2rem;
+    border: 1.5px solid var(--heading);
+    font-size: 0.85rem;
+    font-weight: 500;
+    /* Pushes the remaining icons to the right edge of the column. */
+    margin-right: auto;
+  }
+
+  .contact-row :global(.social-link:not(.social-link--linkedin)) {
+    background: transparent;
+    color: var(--heading);
+    border: 1.5px solid var(--heading);
+  }
+
+  .contact-row :global(.social-link:not(.social-link--linkedin):hover) {
+    background: var(--heading);
+    color: var(--bg);
   }
 
   .open {
@@ -218,15 +221,17 @@ const personSchema = {
     border-radius: 0 var(--radius) var(--radius) 0;
   }
 
+  @media (min-width: 801px) {
+    .home-footer { display: none; }
+  }
+
   @media (max-width: 800px) {
     .hero {
       grid-template-columns: minmax(0, 1fr);
-      height: auto;
       min-height: 0;
     }
 
-    .hero-image { order: -1; }
-    .hero-image :global(img) { height: 50vh; }
+    .hero-image { order: -1; height: 50vh; }
     .hero-content { padding: 2.5rem 1.5rem; }
     h1 { font-size: 2rem; }
 
